@@ -29,10 +29,15 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_change_string_key_to_hash_of_5_keys
+
     assert_equal ({"a"=>12, "b"=>23, "c"=>34, "d"=>45}), @shift.keys_maker("12345")
   end
 
   def test_it_can_make_an_offset_array_to_use
     assert_equal (["4", "4", "0", "0"]), @shift.offset_maker("200120")
+  end
+
+  def test_it_can_find_the_shift_numbers_to_encode
+    assert_equal ({"a"=>16, "b"=>27, "c"=>34, "d"=>45}), @shift.shift_numbers("12345", "200120")
   end
 end
