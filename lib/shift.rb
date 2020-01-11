@@ -1,18 +1,20 @@
 require 'time'
-require_relative '../lib/enigma'
+require 'pry'
 
 class Shift
   attr_reader :key, :date
 
   def initialize
-    @key = "random_key"
+    @key = nil
     @date = "today"
   end
 
   def current_date(date = "today")
-    if date == "today"
     @date = Time.now.strftime('%d/%m/%y')
-    end
+  end
+
+  def random_key
+    @key = rand(99999)
   end
 
 end

@@ -5,16 +5,23 @@ class Enigma
 
   def initialize
     @message = message
-    @key = "key"
+    @key = nil
     @date = "today"
     @shift = Shift.new
   end
 
-  def encrypt(message, key = "key", date = "today")
-    @date = @shift.current_date(date)
+  def encrypt(message, key = nil, date = "today")
+    if @date == "today"
+      @date = @shift.current_date(date)
+    end
+    if @key == nil
+      @key = @shift.random_key.to_s
+    else
+      @key = key
+    end
 
-#
-# The encrypt method takes a message String as an argument. It can optionally
+
+ # The encrypt method takes a message String as an argument. It can optionally
 # take a Key and Date as arguments to use for encryption. If the key is not included,
 # generate a random key. If the date is not included, use today’s date.
 #
