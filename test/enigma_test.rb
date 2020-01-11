@@ -4,11 +4,17 @@ require_relative '../lib/enigma'
 class EnigmaTest < Minitest::Test
 
   def setup
-    @enigma = Enigma.new
+    @enigma = Enigma.new("The eagle has landed.", key = "key", date = "today")
   end
 
   def test_is_an_instance_of
     assert_instance_of Enigma, @enigma
+  end
+
+  def test_it_has_attributes
+    assert_equal ("The eagle has landed."), @enigma.message
+    assert_equal ("key"), @enigma.key
+    assert_equal ("today"), @enigma.date
   end
 
 end

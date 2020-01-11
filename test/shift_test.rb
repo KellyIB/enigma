@@ -6,6 +6,7 @@ require_relative '../lib/shift'
 class ShiftTest < Minitest::Test
 
   def setup
+    # @enigma = Enigma.new("The eagle has landed.", key = "key", date = "today")
     @shift = Shift.new
   end
 

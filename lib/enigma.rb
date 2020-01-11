@@ -1,11 +1,15 @@
+require_relative '../lib/shift'
 
 class Enigma
-
-  def initialize
+  attr_reader :message, :key, :date
+  def initialize(message, key = "key", date = "today")
+    @message = message
+    @key = "key"
+    @date = "today"
   end
 
-  def encrypt(message, key = random_key, date = today)
-    
+  def encrypt(message, key = @key, date = @date)
+    # current_date(@date)
 
 #
 # The encrypt method takes a message String as an argument. It can optionally
