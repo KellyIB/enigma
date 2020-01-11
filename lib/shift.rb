@@ -28,4 +28,8 @@ class Shift
     end
   end
 
+  def offset_maker(date)
+    date_square = (((date.to_f) ** 2).to_i).to_s
+    offset_start = (date_square.slice(-4..-1)).chars
   end
+end
