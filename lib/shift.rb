@@ -4,13 +4,13 @@ require_relative '../lib/enigma'
 class Shift
   attr_reader :key, :date
 
-  def initialize(key = "random_key", date = "today")
+  def initialize
     @key = "random_key"
     @date = "today"
   end
 
-  def current_date(date)
-    if date = "today"
+  def current_date(date = "today")
+    if date == "today"
     @date = Time.now.strftime('%d/%m/%y')
     end
   end
