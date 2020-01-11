@@ -9,4 +9,10 @@ class Shift
     @date = "today"
   end
 
+  def current_date(date)
+    if date = "today"
+    @date = Time.now.strftime('%d/%m/%y')
+    end
+  end
+
 end
