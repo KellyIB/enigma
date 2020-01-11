@@ -1,12 +1,20 @@
+require_relative '../lib/shift'
 
 class Enigma
-
-  def initialize
+  attr_reader :message, :key, :date
+  def initialize(message, key = "key", date = "today")
+    @message = message
+    @key = "key"
+    @date = "today"
   end
 
-  def encrypt(message, key, date)
+  def encrypt(message, key = @key, date = @date)
+    # current_date(@date)
+
 #
-# The encrypt method takes a message String as an argument. It can optionally take a Key and Date as arguments to use for encryption. If the key is not included, generate a random key. If the date is not included, use today’s date.
+# The encrypt method takes a message String as an argument. It can optionally
+# take a Key and Date as arguments to use for encryption. If the key is not included,
+# generate a random key. If the date is not included, use today’s date.
 #
 # The encrypt method returns a hash with three keys:
 #
