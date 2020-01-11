@@ -6,7 +6,7 @@ require_relative '../lib/shift'
 class ShiftTest < Minitest::Test
 
   def setup
-    # @enigma = Enigma.new("The eagle has landed.", key = "key", date = "today")
+    @enigma = Enigma.new
     @shift = Shift.new
   end
 
@@ -22,5 +22,5 @@ class ShiftTest < Minitest::Test
   def test_it_can_return_current_date_in_ddmmyy_string_format
   cur_date = Time.now.strftime('%d/%m/%y')
   assert_equal (cur_date), @shift.current_date(@shift.date)
-end
+  end
 end
