@@ -28,4 +28,7 @@ class ShiftTest < Minitest::Test
     refute nil, @shift.random_key
   end
 
+  def test_it_can_change_string_key_to_hash_of_5_keys
+    assert_equal ({"a"=>12, "b"=>23, "c"=>34, "d"=>45}), @shift.keys_maker("12345")
+  end
 end

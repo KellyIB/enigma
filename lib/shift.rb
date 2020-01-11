@@ -17,6 +17,15 @@ class Shift
     @key = rand(100000).to_s
   end
 
-  # def shift_number
+  def keys_maker(key)
+    key_letters = ["a", "b", "c", "d"]
+    key_start = key.chars
+    key_counter = 0
+    key_letters.reduce ({}) do |acc, letter|
+      acc[letter] = (key_start[key_counter] + key_start[key_counter + 1]).to_i
+      key_counter += 1
+      acc
+    end
+  end
 
-end
+  end
