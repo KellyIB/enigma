@@ -11,9 +11,10 @@ class EnigmaTest < Minitest::Test
     assert_instance_of Enigma, @enigma
   end
 
-  def test_it_changes_date_instance_variable_if_needed
-    @enigma.encrypt("The eagle has landed.", key = "key", date = "today")
+  def test_it_changes_date_instance_variables_if_needed
+    @enigma.encrypt("The eagle has landed.", key = nil, date = "today")
     assert_equal (Time.now.strftime('%d/%m/%y')), @enigma.date
+    refute_nil @enigma.key
   end
 end
 
