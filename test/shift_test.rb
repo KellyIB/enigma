@@ -14,4 +14,8 @@ class ShiftTest < Minitest::Test
     assert_instance_of Shift, @shift
   end
 
+  def test_it_has_attributes
+    assert_equal ("random_key"), @shift.key
+    assert_equal ("today"), @shift.date
+  end
 end
