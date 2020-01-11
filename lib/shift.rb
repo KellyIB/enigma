@@ -14,7 +14,9 @@ class Shift
   end
 
   def random_key
-    @key = rand(99999)
+    @key = rand(100000).to_s
   end
+
+  # def shift_number
 
 end
