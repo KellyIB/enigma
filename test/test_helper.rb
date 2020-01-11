@@ -4,4 +4,4 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require "pry"
-#require_realtive '../lib'
+#don't forget require_realtive '../lib'
