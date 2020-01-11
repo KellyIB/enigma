@@ -1,7 +1,7 @@
 require_relative '../lib/shift'
 
 class Enigma
-  attr_reader :message, :key, :date
+  attr_reader :message, :date, :key
 
   def initialize
     @message = message
@@ -17,7 +17,7 @@ class Enigma
     if @key == nil
       @key = @shift.random_key
     end
-    
+    # @shift.shift_numbers(@key, @date)
 
 
 
