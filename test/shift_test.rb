@@ -15,7 +15,7 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert_equal ("random_key"), @shift.key
+    assert_nil @shift.key
     assert_equal ("today"), @shift.date
   end
 
@@ -23,4 +23,9 @@ class ShiftTest < Minitest::Test
   cur_date = Time.now.strftime('%d/%m/%y')
   assert_equal (cur_date), @shift.current_date(@shift.date)
   end
+
+  def test_it_changes_key_instance_variable
+    refute nil, @shift.random_key
+  end
+
 end
