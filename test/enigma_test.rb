@@ -16,7 +16,18 @@ class EnigmaTest < Minitest::Test
     assert_equal (Time.now.strftime('%d/%m/%y')), @enigma.date
     refute_nil @enigma.key
   end
+
+  def test_it_can_find_the_shift_keys
+    assert_equal ({}), @enigma.shift_hash
+    @enigma.encrypt("The eagle has landed.", key = nil, date = "today")
+    assert_equal ({"a"=>16, "b"=>27, "c"=>34, "d"=>45}), @enigma.shift_hash
+  end
+
 end
+
+
+
+
 
 
  #    game_path = './data/games_dummy.csv'

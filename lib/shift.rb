@@ -21,7 +21,7 @@ class Shift
     key_letters = ["a", "b", "c", "d"]
     key_start = key.chars
     key_counter = 0
-    keys_hash = key_letters.reduce ({}) do |acc, letter|
+    key_letters.reduce ({}) do |acc, letter|
       acc[letter] = (key_start.at(key_counter) + key_start.at(key_counter + 1)).to_i
       key_counter += 1
       acc
@@ -37,7 +37,7 @@ class Shift
     keys = keys_maker(key)
     offset = offset_maker(date)
     offset_counter = 0
-    shift_numbers = keys.reduce ({}) do |acc, (letter, number)|
+    keys.reduce ({}) do |acc, (letter, number)|
       acc[letter] = number + ((offset[offset_counter]).to_i)
       offset_counter += 1
       acc
