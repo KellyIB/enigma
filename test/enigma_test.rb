@@ -12,16 +12,16 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_changes_date_instance_variables_if_needed
-    @enigma.encrypt("The eagle has landed.", key = nil, date = "today")
+    assert_equal ("0"), @enigma.key
+  @enigma.encrypt("The eagle has landed.", key = "0", date = "today")
     assert_equal (Time.now.strftime('%d%m%y')), @enigma.date
-
-    refute_nil @enigma.key
+    refute_equal ("0"), @enigma.key
   end
 
   def test_it_can_find_the_shift_keys
     assert_equal ({}), @enigma.shift_hash
     @enigma.encrypt("The eagle has landed.", key = "12345", date = "today")
-    assert_equal ({"1"=>16, "2"=>27, "3"=>34, "4"=>45}), @enigma.shift_hash
+    assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @enigma.shift_hash
   end
 
 end
