@@ -45,7 +45,12 @@ class ShiftTest < Minitest::Test
       @shift.alphabet_and_space_array
   end
 
-  # def test_it_can_break_a_message_into_an_array_en_or_decode_and_return_message_array
-  #   assert_equal (), @shift.change_message("The eagle* has landed.", "12345", "200120")
-  # end
+  def test_it_can_change_a_message
+    assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
+      "s", " ", "l", "a", "n", "d", "e", "d", "."]),
+      @shift.broken_message("The eagle has landed.")
+    assert_equal (["t", "x", "u", "p", "u", "q", "w", "l", "u", "p", "x", "q",
+      "s", "p", "l", "q", "n", "t", "u", "t", "."]),
+      @shift.change_message("The eagle has landed.", {1=>16, 2=>27, 3=>34, 4=>45})
+  end
 end

@@ -21,8 +21,9 @@ class Enigma
       @date = @shift.current_date(date)
       date = @date
     end
-    @shift_hash = @shift.shift_numbers(key, date)
-      
+     @shift_hash= @shift.shift_numbers(key, date)
+     # @shift.encrypt(message, @shift_hash)
+
 
 
 

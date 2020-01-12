@@ -4,6 +4,14 @@ require 'pry'
 class Shift
   attr_reader :date, :key
 
+  # @@alphabet_and_space_array = []
+
+  # def self.alpha_array
+  #   array = ('a'..'z').to_a
+  #   array.unshift(" ")
+  #   array
+  # end
+  #
   def initialize
     @key = "0"
     @date = "today"
@@ -49,35 +57,44 @@ class Shift
     array.unshift(" ")
     array
   end
+
+  def change_message(message, shift_hash)
+    space_and_alphabet = alphabet_and_space_array
+    key_counter = 1
+    shifted_message = (broken_message(message)).map do |letter_or_space|
+      if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || ((shift_hash[key_counter]) % 27 == 0)
+        letter_or_space
+      elsif (space_and_alphabet.index(letter_or_space) + shift_hash[key_counter]) <= 26
+        space_and_alphabet[(space_and_alphabet.index(letter_or_space) + shift_hash[key_counter])]
+      else
+        space_and_alphabet[index_checker(space_and_alphabet.index(letter_or_space))]
+      end
+    end
+    key_counter_check(key_counter)
+    shifted_message
+  end
+
+  def key_counter_check(key_counter)
+    if key_counter == 5
+      key_counter = 1
+    else
+      key_counter += 1
+    end
+  end
+
+  def broken_message(message)
+     message.downcase.chars
+  end
+
+  def index_checker(index_check)
+    if index_check > 26
+      loop do
+       index_check -= 27
+       if index_check >=26
+         break
+       end
+      end
+    end
+    index_check
+  end
 end
-
-  #     elsif letter_or_space =~ /[a-z ]
-  #       key_counter += 1
-  #       character = letter_or_space
-  #     else
-  #       key_counter += 1
-  #       change = letter_or_space.ord + shift_hash[key_counter]
-  #       changed = change_counter(change)
-  #     end
-  #   end
-  # end
-  #
-  # def change_counter(change)
-  #   until change < 123
-  #     change -= 26
-  #   end
-  #   change
-  # end
-
-
-
-  # def encrypt(message, key, date)
-  #   shift_hash = shift_numbers(key, date)
-  #   message_to_encrypt = message.downcase.chars
-  #
-  #   encrypted_message = message_to_encrypt.map do |letter|
-  #     letter.ord
-  #
-  #
-
-    #.ord and .chr
