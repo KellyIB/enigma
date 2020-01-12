@@ -24,6 +24,10 @@ class EnigmaTest < Minitest::Test
     assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @enigma.shift_hash
   end
 
+  def test_it_can_encode
+    assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
+    @enigma.encrypt("hello world", "02715", "040895")
+  end
 end
 
 

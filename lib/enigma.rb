@@ -12,21 +12,23 @@ class Enigma
     @shift_hash = {}
   end
 
-  def encrypt(message, key = "0", date = "today")
+  def key_check(key)
     if key == "0"
       @key = @shift.random_key
-      key = @key
+    else
+      @key = key
     end
+    @key
+  end
+
+  def encrypt(message, key = "0", date = "today")
+    key = key_check(key)
     if date == "today"
       @date = @shift.current_date(date)
       date = @date
     end
      @shift_hash= @shift.shift_numbers(key, date)
-     # @shift.encrypt(message, @shift_hash)
-
-
-
-
+     @shift.encrypt(message, key, date, @shift_hash)
   end
 end
  # The encrypt method takes a message String as an argument. It can optionally
