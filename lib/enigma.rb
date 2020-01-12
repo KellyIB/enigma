@@ -1,23 +1,28 @@
 require_relative '../lib/shift'
 
 class Enigma
-  attr_reader :message, :date, :key
+  attr_reader :message, :date, :shift_hash
+  attr_accessor :key
 
   def initialize
     @message = message
-    @key = nil
+    @key = "0"
     @date = "today"
     @shift = Shift.new
+    @shift_hash = {}
   end
 
-  def encrypt(message, key = nil, date = "today")
-    if @date == "today"
-      @date = @shift.current_date(date)
-    end
-    if @key == nil
+  def encrypt(message, key = "0", date = "today")
+    if key == "0"
       @key = @shift.random_key
+      key = @key
     end
-    # @shift.shift_numbers(@key, @date)
+    if date == "today"
+      @date = @shift.current_date(date)
+      date = @date
+    end
+    @shift_hash = @shift.shift_numbers(key, date)
+      
 
 
 
