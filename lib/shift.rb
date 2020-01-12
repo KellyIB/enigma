@@ -10,7 +10,7 @@ class Shift
   end
 
   def current_date(date = "today")
-    @date = Time.now.strftime('%d/%m/%y')
+    @date = Time.now.strftime('%d%m%y')
   end
 
   def random_key
@@ -18,11 +18,11 @@ class Shift
   end
 
   def keys_maker(key)
-    key_letters = ["a", "b", "c", "d"]
+    key_number = ["1", "2", "3", "4"]
     key_start = key.chars
     key_counter = 0
-    key_letters.reduce ({}) do |acc, letter|
-      acc[letter] = (key_start.at(key_counter) + key_start.at(key_counter + 1)).to_i
+    key_number.reduce ({}) do |acc, key_number|
+      acc[key_number] = (key_start.at(key_counter) + key_start.at(key_counter + 1)).to_i
       key_counter += 1
       acc
     end
@@ -37,10 +37,22 @@ class Shift
     keys = keys_maker(key)
     offset = offset_maker(date)
     offset_counter = 0
-    keys.reduce ({}) do |acc, (letter, number)|
-      acc[letter] = number + ((offset[offset_counter]).to_i)
+    keys.reduce ({}) do |acc, (key_number, number)|
+      acc[key_number] = number + ((offset[offset_counter]).to_i)
       offset_counter += 1
       acc
     end
   end
+
+  # def encrypt(message, key, date)
+  #   shift_hash = shift_numbers(key, date)
+  #   message_to_encrypt = message.downcase.chars
+  #
+  #   encrypted_message = message_to_encrypt.map do |letter|
+  #     letter.ord
+
+
+
+    #.ord and .chr
+
 end
