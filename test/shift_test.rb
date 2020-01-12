@@ -39,7 +39,7 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_find_the_shift_numbers
-    assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @shift.shift_numbers("12345", "200120")
+    assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @shift.shift_numbers('12345', '200120')
     assert_equal ([" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
       "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]),
       @shift.alphabet_and_space_array
@@ -49,8 +49,12 @@ class ShiftTest < Minitest::Test
     assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
       "s", " ", "l", "a", "n", "d", "e", "d", "."]),
       @shift.broken_message("The eagle has landed.")
-    assert_equal (["t", "x", "u", "p", "u", "q", "w", "l", "u", "p", "x", "q",
-      "s", "p", "l", "q", "n", "t", "u", "t", "."]),
+    assert_equal ("ihlreqgsw xazrlqnkwd."),
       @shift.change_message("The eagle has landed.", {1=>16, 2=>27, 3=>34, 4=>45})
+      assert_equal ("qbj"),
+      @shift.change_message("abc", {1=>16, 2=>27, 3=>34, 4=>45})
+      assert_equal ("q*j"),
+      @shift.change_message("A*c", {1=>16, 2=>27, 3=>34, 4=>45})
+
   end
 end

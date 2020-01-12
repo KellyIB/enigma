@@ -59,19 +59,18 @@ class Shift
   end
 
   def change_message(message, shift_hash)
-    space_and_alphabet = alphabet_and_space_array
-    key_counter = 1
+    key_counter = 0
     shifted_message = (broken_message(message)).map do |letter_or_space|
-      if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || ((shift_hash[key_counter]) % 27 == 0)
+      key_counter = key_counter_check(key_counter)
+      if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || ((shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
-      elsif (space_and_alphabet.index(letter_or_space) + shift_hash[key_counter]) <= 26
-        space_and_alphabet[(space_and_alphabet.index(letter_or_space) + shift_hash[key_counter])]
+      elsif (alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]) <= 26
+        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
       else
-        space_and_alphabet[index_checker(space_and_alphabet.index(letter_or_space))]
+        alphabet_and_space_array[index_checker(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
       end
     end
-    key_counter_check(key_counter)
-    shifted_message
+    shifted_message.join
   end
 
   def key_counter_check(key_counter)
@@ -80,6 +79,7 @@ class Shift
     else
       key_counter += 1
     end
+    key_counter
   end
 
   def broken_message(message)
@@ -87,14 +87,10 @@ class Shift
   end
 
   def index_checker(index_check)
-    if index_check > 26
-      loop do
-       index_check -= 27
-       if index_check >=26
-         break
-       end
+    times = (index_check / 27)
+      if index_check >= 26
+        index_check -= 27 * (times)
       end
-    end
     index_check
   end
 end
