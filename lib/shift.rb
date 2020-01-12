@@ -5,16 +5,20 @@ class Shift
   attr_reader :date, :key
 
   def initialize
-    @key = "0"
-    @date = "today"
   end
 
-  def current_date(date = "today")
-    @date = Time.now.strftime('%d%m%y')
+  def key_check(key)
+    if key == "0"
+      key = rand(100000).to_s.rjust(5,'0')
+    end
+    key
   end
 
-  def random_key
-    @key = rand(100000).to_s
+  def date_check(date)
+    if date == "today"
+      date = Time.now.strftime('%d%m%y')
+    end
+    date
   end
 
   def keys_maker(key)
@@ -22,10 +26,8 @@ class Shift
     key_numbers = [1, 2, 3, 4]
     key_counter = 0
     key_numbers.reduce ({}) do |acc, key_number|
-      # binding.pry
       acc[key_number] = (key_start[key_counter] + key_start[key_counter + 1]).to_i
       key_counter += 1
-      # binding.pry
       acc
     end
   end
@@ -66,9 +68,12 @@ class Shift
   end
 
   def index_checker(index_check)
-    times = (index_check / 27)
+    times = (index_check.abs / 27)
       if index_check >= 26
         index_check -= 27 * (times)
+      elsif index_check < 0 && index_check < -27
+        index_check -= 27 * (times)
+
       end
     index_check
   end
@@ -79,18 +84,37 @@ class Shift
       key_counter = key_counter_check(key_counter)
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || ((shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
         letter_or_space
-      elsif (alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]) <= 26
-        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
+      elsif (alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]).abs <= 26
+        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]).abs]
       else
-        alphabet_and_space_array[index_checker(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
+        alphabet_and_space_array[index_checker(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]).abs]
       end
     end
     shifted_message.join
   end
 
+  # def unchange_message(message, shift_hash)
+  #   key_counter = 0
+  #   shifted_message = (broken_message(message)).map do |letter_or_space|
+  #     key_counter = key_counter_check(key_counter)
+  #     if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || ((shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
+  #       letter_or_space
+  #     elsif (alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter]) <= 26
+  #       alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
+  #     else
+  #       alphabet_and_space_array[index_checker(alphabet_and_space_array.index(letter_or_space) + shift_hash[key_counter])]
+  #     end
+  #   end
+  #   shifted_message.join
+  # end
+
   def encrypt(message, key, date, shift_hash)
     {encryption: change_message(message, shift_hash), key: key, date: date}
   end
+
+  # def random_key
+  #   @key = rand(100000).to_s
+  # end
 
 
 end
