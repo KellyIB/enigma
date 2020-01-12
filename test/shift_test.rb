@@ -45,16 +45,23 @@ class ShiftTest < Minitest::Test
       @shift.alphabet_and_space_array
   end
 
-  def test_it_can_change_a_message
+  def test_it_can_encrypt_a_message
     assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
       "s", " ", "l", "a", "n", "d", "e", "d", "."]),
       @shift.broken_message("The eagle has landed.")
-    assert_equal ("ihlreqgsw xazrlqnkwd."),
+    assert_equal ("ihl uancu osh sscdlv."),
       @shift.change_message("The eagle has landed.", {1=>16, 2=>27, 3=>34, 4=>45})
       assert_equal ("qbj"),
       @shift.change_message("abc", {1=>16, 2=>27, 3=>34, 4=>45})
       assert_equal ("q*j"),
       @shift.change_message("A*c", {1=>16, 2=>27, 3=>34, 4=>45})
+  end
 
+  def test_it_can_encrypt
+    key = "02715"
+    date = "040895"
+    shift_hash = @shift.shift_numbers(key, date)
+    assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
+    @shift.encrypt("hello world", key, date, shift_hash)
   end
 end
