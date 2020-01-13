@@ -10,21 +10,20 @@ class EnigmaTest < Minitest::Test
   def test_is_an_instance_of
     assert_instance_of Enigma, @enigma
   end
-  #
-  # def test_it_changes_date_instance_variables_if_needed
-  # @enigma.encrypt("The eagle has landed.", key = "0", date = "today")
-  #   assert_equal (Time.now.strftime('%d%m%y')), @enigma.date
-  # end
-
-  def test_it_can_find_the_shift_keys
-    assert_equal ({}), @enigma.shift_hash
-    @enigma.encrypt("The eagle has landed.", key = "12345", date = "today")
-    assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @enigma.shift_hash
-  end
 
   def test_it_can_encrypt
     assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
     @enigma.encrypt("hello world", "02715", "040895")
+    assert_equal ({:encryption=>"", :key=>"02715", :date=>"120120"}),
+    @enigma.encrypt("hello world", "02715", "120120")
+  end
+
+  def test_it_can_decrypt
+    skip
+    assert_equal ({decryption: "hello world", key: "02715", date: "040895"}),
+    @enigma.decrypt("keder ohulw", "02715", "040895")
+    assert_equal ({decryption: "hello world", key: "02715", date: "120120"}),
+    @enigma.decrypt("nib u mcxpu", "02715")
   end
 
 end
