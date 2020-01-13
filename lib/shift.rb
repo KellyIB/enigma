@@ -37,10 +37,9 @@ class Shift
   end
 
   def shift_numbers(key, date)
-    keys = keys_maker(key)
     offset = offset_maker(date)
     offset_counter = 0
-    keys.reduce ({}) do |acc, (key_number, number)|
+    (keys_maker(key)).reduce ({}) do |acc, (key_number, number)|
       acc[key_number] = number + ((offset[offset_counter]).to_i)
       offset_counter += 1
       acc
@@ -50,7 +49,6 @@ class Shift
   def alphabet_and_space_array
     array = ('a'..'z').to_a
     array.unshift(" ")
-    array
   end
 
   def key_counter_check(key_counter)
@@ -60,10 +58,6 @@ class Shift
       key_counter += 1
     end
     key_counter
-  end
-
-  def broken_message(message)
-     message.downcase.chars
   end
 
   def index_checker(index_check)
@@ -78,13 +72,14 @@ class Shift
 
   def change_message(message, shift_hash)
     key_counter = 0
-    shifted_message = (broken_message(message)).map do |letter_or_space|
+    shifted_message = (message.downcase.chars).map do |letter_or_space|
     key_counter = key_counter_check(key_counter)
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
         letter_or_space
       elsif (alphabet_and_space_array.index(letter_or_space) +
-        (shift_hash[key_counter]).abs) == 0
+        (shift_hash[key_counter]).abs) == 0 || index_checker(alphabet_and_space_array.index(letter_or_space) + 
+        shift_hash[key_counter]) == 0
         letter_or_space = "z"
       elsif (alphabet_and_space_array.index(letter_or_space) +
         (shift_hash[key_counter]).abs) <= 26
@@ -109,7 +104,7 @@ class Shift
 
   def unchange_message(message, shift_hash)
     key_counter = 0
-    shifted_message = (broken_message(message)).map do |letter_or_space|
+    shifted_message = (message.downcase.chars).map do |letter_or_space|
       key_counter = key_counter_check(key_counter)
       decrypt_shift = adjust_number(alphabet_and_space_array.index(letter_or_space), shift_hash[key_counter])
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
@@ -124,18 +119,6 @@ class Shift
     shifted_message.join
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
     def encrypt(message, key, date, shift_hash)
       {encryption: change_message(message, shift_hash), key: key, date: date}
     end
@@ -143,5 +126,4 @@ class Shift
     def decrypt(message, key, date, shift_hash)
       {decryption: unchange_message(message, shift_hash), key: key, date: date}
     end
-
 end
