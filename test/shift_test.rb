@@ -53,16 +53,6 @@ class ShiftTest < Minitest::Test
     assert_equal (1), @shift.key_counter_check(4)
   end
 
-  def test_it_can_break_message_into_an_array_of_string
-    assert_equal (["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"]),
-    @shift.broken_message("Hello world")
-    assert_equal (["k", "e", "d", "e", "r", " ", "o", "h", "u", "l", "w"]),
-    @shift.broken_message("keder ohulw")
-    assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
-    "s", " ", "l", "a", "n", "d", "e", "d", "."]),
-    @shift.broken_message("The eagle has landed.")
-  end
-
   def test_it_can_check_index_and_find_correct_place_in_alphabet_array
     assert_equal (1), @shift.index_checker(55)
     assert_equal (26), @shift.index_checker(53)
@@ -81,14 +71,17 @@ class ShiftTest < Minitest::Test
     @shift.encrypt("hello world", key, date, shift_hash)
   end
 
+  def test_it_can_adjust_shift_number_for_decypher
+    assert_equal (4), @shift.adjust_number(18, 4)
+    assert_equal (17), @shift.adjust_number(4, 71)
+  end
+
   def test_it_can_unchange_a_message
      assert_equal ("the eagle has landed."),
     @shift.unchange_message("ihl uancu osh sscdlv.", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("abc"), @shift.unchange_message("qbj", {1=>16, 2=>27, 3=>34, 4=>45})
     shift_hash = @shift.shift_numbers("02715", "040895")
     assert_equal ("hello world"), @shift.unchange_message("keder ohulw", shift_hash)
-
-
   end
 
 end
