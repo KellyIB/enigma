@@ -58,6 +58,9 @@ class ShiftTest < Minitest::Test
     @shift.broken_message("Hello world")
     assert_equal (["k", "e", "d", "e", "r", " ", "o", "h", "u", "l", "w"]),
     @shift.broken_message("keder ohulw")
+    assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
+    "s", " ", "l", "a", "n", "d", "e", "d", "."]),
+    @shift.broken_message("The eagle has landed.")
   end
 
   def test_it_can_check_index_and_find_correct_place_in_alphabet_array
@@ -67,9 +70,6 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_change_a_message
-    assert_equal (["t", "h", "e", " ", "e", "a", "g", "l", "e", " ", "h", "a",
-    "s", " ", "l", "a", "n", "d", "e", "d", "."]),
-    @shift.broken_message("The eagle has landed.")
     assert_equal ("ihl uancu osh sscdlv."),
     @shift.change_message("The eagle has landed.", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("qbj"), @shift.change_message("abc", {1=>16, 2=>27, 3=>34, 4=>45})
@@ -81,6 +81,14 @@ class ShiftTest < Minitest::Test
     @shift.encrypt("hello world", key, date, shift_hash)
   end
 
+  def test_it_can_unchange_a_message
+     assert_equal ("the eagle has landed."),
+    @shift.unchange_message("ihl uancu osh sscdlv.", {1=>16, 2=>27, 3=>34, 4=>45})
+    assert_equal ("abc"), @shift.unchange_message("qbj", {1=>16, 2=>27, 3=>34, 4=>45})
+    shift_hash = @shift.shift_numbers("02715", "040895")
+    assert_equal ("hello world"), @shift.unchange_message("keder ohulw", shift_hash)
 
+
+  end
 
 end

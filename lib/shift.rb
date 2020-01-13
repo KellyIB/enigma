@@ -68,57 +68,73 @@ class Shift
 
   def index_checker(index_check)
     times = (index_check.abs / 27).to_i
-    # binding.pry
-      if index_check >= 26
-        # binding.pry
-        index_check -= 27 * (times)
-        # binding.pry
-      elsif index_check < 0
-        # binding.pry
-        index_check += 27 * (times)
-        # binding.pry
-      end
+    if index_check < 1
+      index_check += (27 * times)
+    else
+      index_check -= (27 * times)
+    end
     index_check
   end
 
   def change_message(message, shift_hash)
     key_counter = 0
     shifted_message = (broken_message(message)).map do |letter_or_space|
-      key_counter = key_counter_check(key_counter)
+    key_counter = key_counter_check(key_counter)
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
         letter_or_space
-        # binding.pry
+      elsif (alphabet_and_space_array.index(letter_or_space) +
+        (shift_hash[key_counter]).abs) == 0
+        letter_or_space = "z"
       elsif (alphabet_and_space_array.index(letter_or_space) +
         (shift_hash[key_counter]).abs) <= 26
         alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) +
         shift_hash[key_counter]).abs]
-        # binding.pry
       else
         alphabet_and_space_array[index_checker(alphabet_and_space_array.index(
         letter_or_space) +shift_hash[key_counter]).abs]
-        # binding.pry
-      end
+        end
     end
     shifted_message.join
+  end
+
+  def adjust_number(ciphertext_index, shift_number)
+    return shift_number if ciphertext_index == nil
+    if shift_number > ciphertext_index
+      times = (shift_number / 27).to_i
+      shift_number = shift_number - (27 * times)
+    end
+    shift_number
   end
 
   def unchange_message(message, shift_hash)
     key_counter = 0
     shifted_message = (broken_message(message)).map do |letter_or_space|
       key_counter = key_counter_check(key_counter)
+      decrypt_shift = adjust_number(alphabet_and_space_array.index(letter_or_space), shift_hash[key_counter])
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
         letter_or_space
-      elsif (alphabet_and_space_array.index(letter_or_space) - shift_hash[key_counter]) >= 0
-        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - shift_hash[key_counter])]
+      elsif decrypt_shift < (alphabet_and_space_array.index(letter_or_space))
+          alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - decrypt_shift)]
       else
-        alphabet_and_space_array[index_checker(alphabet_and_space_array.index(
-        letter_or_space) - shift_hash[key_counter])]
+        alphabet_and_space_array[(decrypt_shift - 27 - (alphabet_and_space_array.index(letter_or_space))).abs]
       end
     end
     shifted_message.join
   end
+
+
+
+
+
+
+
+
+
+
+
+
 
     def encrypt(message, key, date, shift_hash)
       {encryption: change_message(message, shift_hash), key: key, date: date}
