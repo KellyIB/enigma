@@ -31,6 +31,7 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_change_string_key_to_hash_of_5_keys
+    assert_equal ({1=>18, 2=>83, 3=>34, 4=>41}), @shift.keys_maker("18341")
     assert_equal ({1=>12, 2=>23, 3=>34, 4=>45}), @shift.keys_maker("12345")
   end
 
@@ -41,6 +42,9 @@ class ShiftTest < Minitest::Test
   def test_it_can_find_the_shift_numbers_and_alphabet_array
     assert_equal ({1=>16, 2=>27, 3=>34, 4=>45}), @shift.shift_numbers('12345', '200120')
     assert_equal ({1=>03, 2=>27, 3=>73, 4=>20}), @shift.shift_numbers("02715", "040895")
+    assert_equal ({1=>18, 2=>84, 3=>34, 4=>41}), @shift.shift_numbers("18341", '101010')
+    assert_equal ({1=>51, 2=>58, 3=>75, 4=>79}), @shift.shift_numbers("45678", "090909")
+    assert_equal ({1=>18, 2=>87, 3=>34, 4=>41}), @shift.shift_numbers("18341", "101020")
     assert_equal ([" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
       "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]),
       @shift.alphabet_and_space_array
@@ -69,6 +73,12 @@ class ShiftTest < Minitest::Test
       shift_hash = @shift.shift_numbers(key, date)
     assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
     @shift.encrypt("hello world", key, date, shift_hash)
+    key = "18341"
+    date = "101010"
+    shift_hash = @shift.shift_numbers(key, date)
+    assert_equal ({encryption: "zrc sul pra?", key: "18341", date: "101010"}),
+    @shift.encrypt("how are you?", key, date, shift_hash)
+
   end
 
   def test_it_can_adjust_shift_number_for_decypher
@@ -83,5 +93,22 @@ class ShiftTest < Minitest::Test
     shift_hash = @shift.shift_numbers("02715", "040895")
     assert_equal ("hello world"), @shift.unchange_message("keder ohulw", shift_hash)
   end
+
+  def test_it_can_encrypt
+    assert_equal ({:encryption=>"fuhsm svpaz!", :key=>"21234", :date=>"130120"}),
+    @shift.encrypt("Hello world!", "21234", "130120", {1=>25, 2=>16, 3=>23, 4=>34})
+    assert_equal ({:encryption=> "noc grl doa?", :key=>"02345", :date=>"130120"}),
+    @shift.encrypt("How are you?", "02345", "130120", {1=>06, 2=>27, 3=>34, 4=>45})
+    assert_equal ({:encryption=>"zug sxp pue?", :key=>"18341", :date=>"101020"}),
+    @shift.encrypt("How are you?", "18341", "101020", {1=>18, 2=>87, 3=>38, 4=>41})
+  end
+
+  def test_it_can_decrypt
+    assert_equal ({:decryption=> "qlp joy gln?", :key=>"18341", :date=>"101010"}),
+    @shift.decrypt("How are you?", "18341", "101010", {1=>18, 2=>84, 3=>34, 4=>41})
+    assert_equal ({:decryption=> "plp ioy fln?", :key=>"19341", :date=>"101010"}),
+    @shift.decrypt("How are you?", "19341", "101010", {1=>19, 2=>84, 3=>34, 4=>41})
+  end
+
 
 end
