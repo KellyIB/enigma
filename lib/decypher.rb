@@ -29,11 +29,10 @@ class Decypher < Shift
   end
 
   def character_choice(letter, shift_hash, key_counter, decrypt_shift)
-    if (special_character_check(letter) == nil) || (
-      (shift_hash[key_counter].to_i) % 27 == 0)
+    if special_character_check(letter) == nil || shift_hash[key_counter].to_i % 27 == 0
       letter
-    elsif (abc_array.index(letter)) >= decrypt_shift
-      abc_array[(abc_array.index(letter) - decrypt_shift)]
+    elsif abc_array.index(letter) >= decrypt_shift
+      abc_array[abc_array.index(letter) - decrypt_shift]
     else
       abc_array[(abc_array.index(letter) - (decrypt_shift - 27)).abs]
     end
