@@ -47,8 +47,7 @@ class Shift
   end
 
   def alphabet_and_space_array
-    array = ('a'..'z').to_a
-    array.unshift(" ")
+    ('a'..'z').to_a << " "
   end
 
   def key_counter_check(key_counter)
@@ -62,12 +61,7 @@ class Shift
 
   def index_checker(index_check)
     times = (index_check.abs / 27).to_i
-    if index_check < 1
-      index_check += (27 * times)
-    else
       index_check -= (27 * times)
-    end
-    index_check
   end
 
   def change_message(message, shift_hash)
@@ -75,20 +69,16 @@ class Shift
     shifted_message = (message.downcase.chars).map do |letter_or_space|
     key_counter = key_counter_check(key_counter)
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
-        (shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
+        (shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
       elsif (alphabet_and_space_array.index(letter_or_space) +
-        (shift_hash[key_counter]).abs) == 0 || index_checker(alphabet_and_space_array.index(letter_or_space) + 
-        shift_hash[key_counter]) == 0
-        letter_or_space = "z"
-      elsif (alphabet_and_space_array.index(letter_or_space) +
-        (shift_hash[key_counter]).abs) <= 26
+        (shift_hash[key_counter])) <= 26
         alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) +
-        shift_hash[key_counter]).abs]
+        shift_hash[key_counter])]
       else
         alphabet_and_space_array[index_checker(alphabet_and_space_array.index(
-        letter_or_space) +shift_hash[key_counter]).abs]
-        end
+        letter_or_space) + shift_hash[key_counter])]
+      end
     end
     shifted_message.join
   end
@@ -108,12 +98,14 @@ class Shift
       key_counter = key_counter_check(key_counter)
       decrypt_shift = adjust_number(alphabet_and_space_array.index(letter_or_space), shift_hash[key_counter])
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
-        (shift_hash[key_counter].to_i) % 27 == 0) || letter_or_space == " "
+        (shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
-      elsif decrypt_shift < (alphabet_and_space_array.index(letter_or_space))
+      elsif (alphabet_and_space_array.index(letter_or_space)) >= decrypt_shift
           alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - decrypt_shift)]
+          # binding.pry
       else
-        alphabet_and_space_array[(decrypt_shift - 27 - (alphabet_and_space_array.index(letter_or_space))).abs]
+        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - (decrypt_shift - 27)).abs]
+        # binding.pry
       end
     end
     shifted_message.join
