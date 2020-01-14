@@ -8,7 +8,8 @@ handle.close
 
 encrypted_message = enigma.encrypt(message)
 
-puts "Created #{encrypted_message[:encryption]} with the key #{encrypted_message[:key]} and date #{encrypted_message[:date]}."
+puts "Created #{encrypted_message[:encryption]}
+with the key #{encrypted_message[:key]} and date #{encrypted_message[:date]}."
 
 writer = File.open(ARGV[1], "w")
 

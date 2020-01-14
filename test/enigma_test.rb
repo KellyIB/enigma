@@ -27,19 +27,3 @@ class EnigmaTest < Minitest::Test
     @enigma.decrypt("nib udmcxpu", "02715")
   end
 end
-
-
-
-
-
- #    game_path = './data/games_dummy.csv'
- #    team_path = './data/teams.csv'
- #    game_teams_path = './data/game_teams_dummy.csv'
- #
- #    our_locations = {
- #      games: game_path,
- #      teams: team_path,
- #      game_teams: game_teams_path
- #    }
- #
- # end

@@ -1,4 +1,4 @@
-require 'time'
+require 'date'
 
 class Shift
 
@@ -14,7 +14,7 @@ class Shift
 
   def date_check(date)
     if date == "today"
-      date = Time.now.strftime('%d%m%y')
+      date = Date.today.strftime('%d%m%y')
     end
     date
   end

@@ -1,6 +1,6 @@
 require_relative '../test/test_helper'
 require_relative '../lib/enigma'
-require 'time'
+require 'date'
 require_relative '../lib/shift'
 
 class ShiftTest < Minitest::Test
@@ -20,8 +20,8 @@ class ShiftTest < Minitest::Test
     assert_equal (5), @shift.key_check("0").length
   end
 
-  def test_it_can_check_date_and_select_current_date_if_needed_in_ddmmyy_string_format
-    cur_date = Time.now.strftime('%d%m%y')
+  def test_it_can_select_current_date_in_ddmmyy_string_format
+    cur_date = Date.today.strftime('%d%m%y')
     date = "120120"
     assert_equal ("120120"), @shift.date_check(date)
     date = "040519"
@@ -30,7 +30,7 @@ class ShiftTest < Minitest::Test
     assert_equal (cur_date), @shift.date_check(date)
   end
 
-  def test_it_can_change_string_key_to_hash_of_5_keys
+  def test_it_can_change_string_key_to_hash_of_4_keys
     assert_equal ({1=>18, 2=>83, 3=>34, 4=>41}), @shift.keys_maker("18341")
     assert_equal ({1=>12, 2=>23, 3=>34, 4=>45}), @shift.keys_maker("12345")
   end
@@ -69,17 +69,9 @@ class ShiftTest < Minitest::Test
     @shift.change_message("The eagle has landed.", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("qbj"), @shift.change_message("abc", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("q*j"), @shift.change_message("A*c", {1=>16, 2=>27, 3=>34, 4=>45})
-      key = "02715"
-      date = "040895"
-      shift_hash = @shift.shift_numbers(key, date)
-    assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
-    @shift.encrypt("hello world", key, date, shift_hash)
-    key = "18341"
-    date = "101010"
-    shift_hash = @shift.shift_numbers(key, date)
-    assert_equal ({encryption: "zrcnsulnpra?", key: "18341", date: "101010"}),
-    @shift.encrypt("how are you?", key, date, shift_hash)
-
+    assert_equal ("qahsrbitscjutdkvuelwvfmxwgnyxhozyip zjqa krbalsc"),
+    @shift.change_message("Aaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllll",
+      {1=>16, 2=>27, 3=>34, 4=>45})
   end
 
   def test_it_can_adjust_shift_number_for_decypher
@@ -88,10 +80,13 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_unchange_a_message
+    assert_equal ("aaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllll"),
+    @shift.unchange_message("qahsrbitscjutdkvuelwvfmxwgnyxhozyip zjqa krbalsc",
+      {1=>16, 2=>27, 3=>34, 4=>45})
      assert_equal ("the eagle has landed."),
     @shift.unchange_message("ihlruancu osh sscdlv.", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("abc"), @shift.unchange_message("qbj", {1=>16, 2=>27, 3=>34, 4=>45})
-    shift_hash = @shift.shift_numbers("02715", "040895")
+      shift_hash = @shift.shift_numbers("02715", "040895")
     assert_equal ("hello world"), @shift.unchange_message("keder ohulw", shift_hash)
   end
 
@@ -102,6 +97,16 @@ class ShiftTest < Minitest::Test
     @shift.encrypt("How are you?", "02345", "130120", {1=>06, 2=>27, 3=>34, 4=>45})
     assert_equal ({:encryption=>"zugnsxpnpue?", :key=>"18341", :date=>"101020"}),
     @shift.encrypt("How are you?", "18341", "101020", {1=>18, 2=>87, 3=>38, 4=>41})
+    key = "02715"
+    date = "040895"
+    shift_hash = @shift.shift_numbers(key, date)
+    assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
+    @shift.encrypt("hello world", key, date, shift_hash)
+    key = "18341"
+    date = "101010"
+    shift_hash = @shift.shift_numbers(key, date)
+    assert_equal ({encryption: "zrcnsulnpra?", key: "18341", date: "101010"}),
+    @shift.encrypt("how are you?", key, date, shift_hash)
   end
 
   def test_it_can_decrypt
@@ -111,8 +116,5 @@ class ShiftTest < Minitest::Test
     @shift.decrypt("nocrgrlrdoa?", "02345", "130120", {1=>06, 2=>27, 3=>34, 4=>45})
     assert_equal ({:decryption=>"how are you?", :key=>"18341", :date=>"101020"}),
     @shift.decrypt("zugnsxpnpue?", "18341", "101020", {1=>18, 2=>87, 3=>38, 4=>41})
-
   end
-
-
 end
