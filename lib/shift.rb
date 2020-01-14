@@ -1,5 +1,4 @@
 require 'time'
-require 'pry'
 
 class Shift
 
@@ -47,7 +46,7 @@ class Shift
   end
 
   def alphabet_and_space_array
-    ('a'..'z').to_a << " "
+    (('a'..'z').to_a << " ")
   end
 
   def key_counter_check(key_counter)
@@ -71,7 +70,7 @@ class Shift
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
-      elsif (alphabet_and_space_array.index(letter_or_space) +
+      elsif ((('a'..'z').to_a << " ").index(letter_or_space) +
         (shift_hash[key_counter])) <= 26
         alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) +
         shift_hash[key_counter])]
@@ -102,10 +101,8 @@ class Shift
         letter_or_space
       elsif (alphabet_and_space_array.index(letter_or_space)) >= decrypt_shift
           alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - decrypt_shift)]
-          # binding.pry
       else
         alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - (decrypt_shift - 27)).abs]
-        # binding.pry
       end
     end
     shifted_message.join
