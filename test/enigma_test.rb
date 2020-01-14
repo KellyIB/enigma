@@ -16,14 +16,14 @@ class EnigmaTest < Minitest::Test
     @enigma.encrypt("hello world", "02715", "040895")
     assert_equal ({:encryption=>"nib udmcxpu", :key=>"02715", :date=>"120120"}),
     @enigma.encrypt("hello world", "02715", "120120")
-    assert_equal ({:encryption=>"nib udmcxpu", :key=>"02715", :date=>"130120"}),
+    assert_equal ({:encryption=>"nib udmcxpu", :key=>"02715", :date=>"140120"}),
     @enigma.encrypt("hello world", "02715")
   end
 
   def test_it_can_decrypt
     assert_equal ({decryption: "hello world", key: "02715", date: "040895"}),
     @enigma.decrypt("keder ohulw", "02715", "040895")
-    assert_equal ({decryption: "hello world", key: "02715", date: "130120"}),
+    assert_equal ({decryption: "hello world", key: "02715", date: "140120"}),
     @enigma.decrypt("nib udmcxpu", "02715")
   end
 end
