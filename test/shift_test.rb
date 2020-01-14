@@ -25,7 +25,7 @@ class ShiftTest < Minitest::Test
     date = "120120"
     assert_equal ("120120"), @shift.date_check(date)
     date = "040519"
-     assert_equal ("040519"), @shift.date_check(date)
+    assert_equal ("040519"), @shift.date_check(date)
     date = "today"
     assert_equal (cur_date), @shift.date_check(date)
   end
@@ -47,8 +47,8 @@ class ShiftTest < Minitest::Test
     assert_equal ({1=>51, 2=>58, 3=>75, 4=>79}), @shift.shift_numbers("45678", "090909")
     assert_equal ({1=>18, 2=>87, 3=>34, 4=>41}), @shift.shift_numbers("18341", "101020")
     assert_equal (["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-      "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]),
-      @shift.alphabet_and_space_array
+    "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]),
+    @shift.abc_array
   end
 
   def test_it_can_add_one_to_counter_and_reset_to_one

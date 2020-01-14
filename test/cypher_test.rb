@@ -38,14 +38,14 @@ class CypherTest < Minitest::Test
     @cypher.encrypt("How are you?", "02345", "130120", {1=>06, 2=>27, 3=>34, 4=>45})
     assert_equal ({:encryption=>"zugnsxpnpue?", :key=>"18341", :date=>"101020"}),
     @cypher.encrypt("How are you?", "18341", "101020", {1=>18, 2=>87, 3=>38, 4=>41})
-    key = "02715"
-    date = "040895"
-    shift_hash = @cypher.shift_numbers(key, date)
+      key = "02715"
+      date = "040895"
+      shift_hash = @cypher.shift_numbers(key, date)
     assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
     @cypher.encrypt("hello world", key, date, shift_hash)
-    key = "18341"
-    date = "101010"
-    shift_hash = @cypher.shift_numbers(key, date)
+      key = "18341"
+      date = "101010"
+      shift_hash = @cypher.shift_numbers(key, date)
     assert_equal ({encryption: "zrcnsulnpra?", key: "18341", date: "101010"}),
     @cypher.encrypt("how are you?", key, date, shift_hash)
   end

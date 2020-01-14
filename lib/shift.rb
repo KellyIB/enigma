@@ -45,7 +45,7 @@ class Shift
     end
   end
 
-  def alphabet_and_space_array
+  def abc_array
     (('a'..'z').to_a << " ")
   end
 
@@ -57,4 +57,9 @@ class Shift
     end
     key_counter
   end
+
+  def special_character_check(letter)
+    letter.match(/^[[:alpha:][:blank:]]+$/)
+  end
+
 end

@@ -20,25 +20,23 @@ class Decypher < Shift
 
   def unchange_message(message, shift_hash)
     key_counter = 0
-    shifted_message = (message.downcase.chars).map do |letter_or_space|
+    shifted_message = (message.downcase.chars).map do |letter|
       key_counter = key_counter_check(key_counter)
-      decrypt_shift = adjust_number(alphabet_and_space_array.index(letter_or_space), shift_hash[key_counter])
-      character_choice(letter_or_space, shift_hash, key_counter, decrypt_shift)
+      decrypt_shift = adjust_number(abc_array.index(letter), shift_hash[key_counter])
+      character_choice(letter, shift_hash, key_counter, decrypt_shift)
     end
     shifted_message.join
   end
 
-  def character_choice(letter_or_space, shift_hash, key_counter, decrypt_shift)
-    if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
+  def character_choice(letter, shift_hash, key_counter, decrypt_shift)
+    if (special_character_check(letter) == nil) || (
       (shift_hash[key_counter].to_i) % 27 == 0)
-      letter_or_space
-    elsif (alphabet_and_space_array.index(letter_or_space)) >= decrypt_shift
-        alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - decrypt_shift)]
+      letter
+    elsif (abc_array.index(letter)) >= decrypt_shift
+      abc_array[(abc_array.index(letter) - decrypt_shift)]
     else
-      alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) - (decrypt_shift - 27)).abs]
+      abc_array[(abc_array.index(letter) - (decrypt_shift - 27)).abs]
     end
   end
-
-
 
 end

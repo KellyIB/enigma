@@ -14,6 +14,7 @@ class DecypherTest < Minitest::Test
   def test_is_an_instance_of
     assert_instance_of Decypher, @decypher
   end
+  
   def test_it_can_adjust_shift_number_for_decypher
     assert_equal (4), @decypher.adjust_number(18, 4)
     assert_equal (17), @decypher.adjust_number(4, 71)
@@ -22,7 +23,7 @@ class DecypherTest < Minitest::Test
   def test_it_can_unchange_a_message
     assert_equal ("aaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllll"),
     @decypher.unchange_message("qahsrbitscjutdkvuelwvfmxwgnyxhozyip zjqa krbalsc",
-      {1=>16, 2=>27, 3=>34, 4=>45})
+    {1=>16, 2=>27, 3=>34, 4=>45})
      assert_equal ("the eagle has landed."),
     @decypher.unchange_message("ihlruancu osh sscdlv.", {1=>16, 2=>27, 3=>34, 4=>45})
     assert_equal ("abc"), @decypher.unchange_message("qbj", {1=>16, 2=>27, 3=>34, 4=>45})

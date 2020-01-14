@@ -1,5 +1,6 @@
 require_relative '../lib/shift'
 require_relative '../lib/cypher'
+require_relative '../lib/decypher'
 
 class Enigma
 
