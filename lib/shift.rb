@@ -70,8 +70,7 @@ class Shift
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
-      elsif ((('a'..'z').to_a << " ").index(letter_or_space) +
-        (shift_hash[key_counter])) <= 26
+      elsif ((('a'..'z').to_a << " ").index(letter_or_space) +(shift_hash[key_counter])) <= 26
         alphabet_and_space_array[(alphabet_and_space_array.index(letter_or_space) +
         shift_hash[key_counter])]
       else
@@ -96,6 +95,7 @@ class Shift
     shifted_message = (message.downcase.chars).map do |letter_or_space|
       key_counter = key_counter_check(key_counter)
       decrypt_shift = adjust_number(alphabet_and_space_array.index(letter_or_space), shift_hash[key_counter])
+      #rf
       if ((letter_or_space.match(/^[[:alpha:][:blank:]]+$/)) == nil) || (
         (shift_hash[key_counter].to_i) % 27 == 0)
         letter_or_space
