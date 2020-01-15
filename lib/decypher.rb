@@ -1,6 +1,7 @@
-require 'pry'
+require_relative '../lib/assistable'
 
-class Decypher < Shift
+class Decypher
+  include Assistable
 
   def initialize
   end
