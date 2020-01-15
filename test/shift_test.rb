@@ -1,6 +1,7 @@
 require_relative '../test/test_helper'
 require_relative '../lib/enigma'
 require 'date'
+require 'mocha/minitest'
 require_relative '../lib/shift'
 
 class ShiftTest < Minitest::Test
@@ -18,16 +19,17 @@ class ShiftTest < Minitest::Test
     assert_equal ("12345"), @shift.key_check("12345")
     assert_equal ("12345".length), @shift.key_check("12345".length)
     assert_equal (5), @shift.key_check("0").length
+    key = @shift.stubs(:key_check).returns("12345")
+    assert_equal ("12345"), @shift.key_check(key)
   end
 
   def test_it_can_select_current_date_in_ddmmyy_string_format
-    cur_date = Date.today.strftime('%d%m%y')
+    cur_date = @shift.stubs(:date_check).returns("121212")
     date = "120120"
     assert_equal ("120120"), @shift.date_check(date)
     date = "040519"
     assert_equal ("040519"), @shift.date_check(date)
-    date = "today"
-    assert_equal (cur_date), @shift.date_check(date)
+    assert_equal ("121212"), @shift.date_check(cur_date)
   end
 
   def test_it_can_change_string_key_to_hash_of_4_keys
@@ -36,7 +38,8 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_make_an_offset_array_to_use
-    assert_equal (["4", "4", "0", "0"]), @shift.offset_maker("200120")
+    date = @shift.stubs(:date_check).returns("121212")
+    assert_equal (["4", "4", "0", "0"]), @shift.offset_maker(date)
     assert_equal (["0", "1", "0", "0"]), @shift.offset_maker("101010")
   end
 
