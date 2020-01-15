@@ -31,35 +31,17 @@ class Shift
   end
 
   def offset_maker(date)
-    date_square = (((date.to_f) ** 2).to_i).to_s
-    (date_square.slice(-4..-1)).chars
+    date_square = (date.to_f ** 2).to_i.to_s
+    date_square.slice(-4..-1).chars
   end
 
   def shift_numbers(key, date)
     offset = offset_maker(date)
     offset_counter = 0
-    (keys_maker(key)).reduce ({}) do |acc, (key_number, number)|
-      acc[key_number] = number + ((offset[offset_counter]).to_i)
+    keys_maker(key).reduce ({}) do |acc, (key_number, number)|
+      acc[key_number] = number + offset[offset_counter].to_i
       offset_counter += 1
       acc
     end
   end
-
-  def abc_array
-    (('a'..'z').to_a << " ")
-  end
-
-  def key_counter_check(key_counter)
-    if key_counter == 4
-      key_counter = 1
-    else
-      key_counter += 1
-    end
-    key_counter
-  end
-
-  def special_character_check(letter)
-    letter.match(/^[[:alpha:][:blank:]]+$/)
-  end
-
 end

@@ -18,6 +18,8 @@ class EnigmaTest < Minitest::Test
     @enigma.encrypt("hello world", "02715", "120120")
     assert_equal ({:encryption=>"nib udmcxpu", :key=>"02715", :date=>"140120"}),
     @enigma.encrypt("hello world", "02715")
+    assert_equal ({:encryption=>"*&^%%$#!@", :key=>"02715", :date=>"101010"}),
+    @enigma.encrypt("*&^%%$#!@", "02715", "101010")
   end
 
   def test_it_can_decrypt

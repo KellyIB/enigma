@@ -46,15 +46,5 @@ class ShiftTest < Minitest::Test
     assert_equal ({1=>18, 2=>84, 3=>34, 4=>41}), @shift.shift_numbers("18341", '101010')
     assert_equal ({1=>51, 2=>58, 3=>75, 4=>79}), @shift.shift_numbers("45678", "090909")
     assert_equal ({1=>18, 2=>87, 3=>34, 4=>41}), @shift.shift_numbers("18341", "101020")
-    assert_equal (["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-    "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]),
-    @shift.abc_array
-  end
-
-  def test_it_can_add_one_to_counter_and_reset_to_one
-    assert_equal (2), @shift.key_counter_check(1)
-    assert_equal (3), @shift.key_counter_check(2)
-    assert_equal (4), @shift.key_counter_check(3)
-    assert_equal (1), @shift.key_counter_check(4)
   end
 end

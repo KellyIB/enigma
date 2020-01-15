@@ -40,13 +40,29 @@ class CypherTest < Minitest::Test
     @cypher.encrypt("How are you?", "18341", "101020", {1=>18, 2=>87, 3=>38, 4=>41})
       key = "02715"
       date = "040895"
-      shift_hash = @cypher.shift_numbers(key, date)
+      shift_hash = @shift.shift_numbers(key, date)
     assert_equal ({encryption: "keder ohulw", key: "02715", date: "040895"}),
     @cypher.encrypt("hello world", key, date, shift_hash)
       key = "18341"
       date = "101010"
-      shift_hash = @cypher.shift_numbers(key, date)
+      shift_hash = @shift.shift_numbers(key, date)
     assert_equal ({encryption: "zrcnsulnpra?", key: "18341", date: "101010"}),
     @cypher.encrypt("how are you?", key, date, shift_hash)
+  end
+
+  def test_it_can_add_one_to_counter_and_reset_to_one
+    assert_equal (2), @cypher.key_counter_check(1)
+    assert_equal (3), @cypher.key_counter_check(2)
+    assert_equal (4), @cypher.key_counter_check(3)
+    assert_equal (1), @cypher.key_counter_check(4)
+  end
+
+  def test_it_can_create_an_alphabet_array_and_check_special_characters
+    assert_nil @cypher.special_character_check("@")
+    refute_equal (nil), @cypher.special_character_check("a")
+    assert_nil @cypher.special_character_check("a#e$")
+    assert_equal (["a", "b", "c", "d", "e", "f", "g", "h", "i",
+      "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+      "v", "w", "x", "y", "z", " "]), @cypher.abc_array
   end
 end

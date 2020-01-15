@@ -1,6 +1,7 @@
-require 'pry'
+require_relative '../lib/assistable'
 
-class Cypher < Shift
+class Cypher
+  include Assistable
 
   def initialize
   end
@@ -24,9 +25,9 @@ class Cypher < Shift
   end
 
   def cyphered_character(letter, key_counter, shift_hash)
-    if special_character_check(letter) == nil || ((shift_hash[key_counter].to_i) % 27 == 0)
+    if special_character_check(letter) == nil || shift_hash[key_counter].to_i % 27 == 0
       letter
-    elsif (abc_array.index(letter) +(shift_hash[key_counter])) <= 26
+    elsif (abc_array.index(letter) + shift_hash[key_counter]) <= 26
       abc_array[(abc_array.index(letter) + shift_hash[key_counter])]
     else
       abc_array[index_checker(abc_array.index(letter) + shift_hash[key_counter])]
